@@ -134,7 +134,7 @@ export default function MediaContent({
                         </Video>
                     }
                     <div style={{ width: "100%", display: 'flex' }}>
-                        <FileContainer target='_blank' href={url}>
+                        <FileContainer target='_blank' href={url} download>
                             {DownloadIcon}&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ textDecoration: "underline" }}>{fileName(url, name)}{size && <SizeText>({size})</SizeText>}</span>
                         </FileContainer>
                     </div>
