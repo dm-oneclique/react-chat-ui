@@ -15,7 +15,8 @@
     "push-dev": "npm run build && npm publish --tag dev",
     "push": "npm run build && npm publish",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
-    "build-storybook": "STORYBOOK=true storybook build"
+    "build-storybook": "STORYBOOK=true storybook build",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
