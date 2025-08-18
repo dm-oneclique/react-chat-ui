@@ -77,11 +77,24 @@ const Video = styled.video<{
 
 `
 
+const fileName = (url: string, name?: string) => {
+    if (name) {
+        return name;
+    }
+    if (url) {
+        if (url.length > 50) {
+            return url.slice(0, 50) + '...';
+        }
+        return url;
+    }
+    return '';
+}
 
 export default function MediaContent({
     type,
     url,
     size,
+    name,
     last,
     single,
     messageType
@@ -121,9 +134,9 @@ export default function MediaContent({
                         </Video>
                     }
                     <div style={{ width: "100%", display: 'flex' }}>
-                        <FileContainer
-                            target='_blank'
-                            href={url}>{DownloadIcon}&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ textDecoration: "underline" }}>{url}{size && <SizeText>({size})</SizeText>}</span></FileContainer>
+                        <FileContainer target='_blank' href={url}>
+                            {DownloadIcon}&nbsp;&nbsp;&nbsp;&nbsp;<span style={{ textDecoration: "underline" }}>{fileName(url, name)}{size && <SizeText>({size})</SizeText>}</span>
+                        </FileContainer>
                     </div>
                 </div>
 
