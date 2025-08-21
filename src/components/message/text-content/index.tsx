@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ReactMarkdown from 'react-markdown'
-import { linkify } from 'markdown-linkify'
+import linkify from 'markdown-linkify'
 
 type Props = {
     children?: string

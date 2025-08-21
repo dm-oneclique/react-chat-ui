@@ -1,3 +1,3 @@
 declare module 'markdown-linkify' {
-  export function linkify(text: string): string;
+  export default function linkify(text: string): string;
 } 

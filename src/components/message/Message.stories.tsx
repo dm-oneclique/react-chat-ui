@@ -50,7 +50,7 @@ const IncomingWithLinkTemplate: StoryFn<Props> = (args: Props) => <Message
 
 />
 
-const IncomingWithHTMLTemplate: StoryFn<Props> = (args: Props) => <Message
+const IncomingWithMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
   user={{
     "id": "danny_1",
@@ -58,12 +58,14 @@ const IncomingWithHTMLTemplate: StoryFn<Props> = (args: Props) => <Message
     avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
   }}
   type="incoming"
-  text="<b>Hello World!</b> <br /> visit  to begin searching"
+  text="**Hello World!**
+  
+  visit https://google.com to begin searching"
   created_at={minutesAgoDate}
 
 />
 
-const IncomingWithLinkAndHTMLTemplate: StoryFn<Props> = (args: Props) => <Message
+const IncomingWithLinkAndMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
   user={{
     "id": "danny_1",
@@ -71,7 +73,9 @@ const IncomingWithLinkAndHTMLTemplate: StoryFn<Props> = (args: Props) => <Messag
     avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
   }}
   type="incoming"
-  text="<b>Hello World!</b>  visit https://google.com to begin searching"
+  text="**Hello World!**
+  
+  visit https://google.com to begin searching"
   created_at={minutesAgoDate}
 
 />
@@ -343,8 +347,8 @@ const OutgoingGifContentTemplate: StoryFn<Props> = (args: Props) => <Message
 
 export const Incoming = LeftTemplate.bind({});
 export const IncomingWithLink = IncomingWithLinkTemplate.bind({});
-export const IncomingWithHTML = IncomingWithHTMLTemplate.bind({});
-export const IncomingWithLinkAndHTML = IncomingWithLinkAndHTMLTemplate.bind({});
+export const IncomingWithMarkdown = IncomingWithMarkdownTemplate.bind({});
+export const IncomingWithLinkAndMarkdown = IncomingWithLinkAndMarkdownTemplate.bind({});
 
 export const IncomingWithAvatar = WithAvatarTemplate.bind({});
 export const IncomingWithHeader = WithHeaderTemplate.bind({});
