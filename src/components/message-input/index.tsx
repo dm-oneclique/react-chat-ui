@@ -96,7 +96,7 @@ const InputElement = styled.div<{
 }>`
     width:100%;
     border: none;
-    max-height: 6.4em;
+    max-height: 12.8em;
     /* Adjust this value to control the maximum number of lines */
     position:relative;
     font-size:16px;
@@ -284,9 +284,15 @@ export default function MessageInput({
                             suppressContentEditableWarning={true}
                             onKeyDown={(event: any) => {
                                 if (event.key === 'Enter') {
-                                    event.preventDefault();  // Prevents adding a new line
-                                    handleSubmit();
-                                    return;
+                                    if (event.shiftKey) {
+                                        // Allow Shift+Enter to add newline
+                                        return;
+                                    } else {
+                                        // Enter without Shift sends the message
+                                        event.preventDefault();
+                                        handleSubmit();
+                                        return;
+                                    }
                                 }
 
                                 inputProps.onKeyDown()
