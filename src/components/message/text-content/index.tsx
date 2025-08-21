@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import ReactMarkdown from 'react-markdown'
+import { linkify } from 'markdown-linkify'
 
 type Props = {
     children?: string
@@ -31,23 +33,58 @@ width: 100%;
 
 a {
     color: ${({ linkColor }) => linkColor || 'blue'};
+    text-decoration: underline;
 }
 
-`
+p {
+    margin: 0;
+    padding: 0;
+}
 
+code {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+pre {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+blockquote {
+    border-left: 3px solid ${({ color }) => color || '#000000'};
+    margin: 0;
+    padding-left: 12px;
+    opacity: 0.8;
+}
+
+ul, ol {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+li {
+    margin: 2px 0;
+}
+`
 
 export default function TextContent({
     linkColor,
     color,
     children = ""
 }: Props) {
+    // Preprocess text with markdown-linkify to convert URLs to markdown links
+    const preprocessedText = linkify(children);
 
-    // Regular expression to match URLs
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-
-    return (<Content
-        linkColor={linkColor}
-        color={color}
-        dangerouslySetInnerHTML={{ __html: children.replace(urlRegex, '<a href="$&" target="_blank">$&</a>') }} />
+    return (
+        <Content linkColor={linkColor} color={color}>
+            <ReactMarkdown>
+                {preprocessedText}
+            </ReactMarkdown>
+        </Content>
     )
 }
