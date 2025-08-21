@@ -58,9 +58,20 @@ const IncomingWithMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
     avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
   }}
   type="incoming"
-  text="**Hello World!**
+  text="
+  **Hello World!**
   
-  visit https://google.com to begin searching"
+  visit:
+  - https://google.com to begin searching
+  - something else:
+    1. something else 2
+    2. something else 3
+    3. something else 4
+    4. something else 5
+    5. something else 6
+    6. something else 7
+    7. something else 8
+  "
   created_at={minutesAgoDate}
 
 />
