@@ -2,7 +2,8 @@ import React from 'react'
 import type { UserType } from '../../types/UserType';
 import OutgoingMessage from './outgoing-message'
 import IncomingMessage from './incoming-message'
-import { type MediaType } from '../../types/MessageType';
+import MessageWithContextMenu from './message-with-context-menu'
+import { type MediaType, type ActionDescription } from '../../types/MessageType';
 
 
 export type Props = {
@@ -23,6 +24,7 @@ export type Props = {
     clusterFirstMessage?: boolean
     clusterLastMessage?: boolean
     themeColor?: string
+    contextMenuActions?: ActionDescription[]
 };
 
 
@@ -41,40 +43,42 @@ export default function Message({
     clusterFirstMessage,
     clusterLastMessage,
     showTimestamp,
-    themeColor
+    themeColor,
+    contextMenuActions
 }: Props) {
 
+    const messageComponent = type === "outgoing" ?
+        <OutgoingMessage
+            loading={loading}
+            text={text}
+            created_at={created_at}
+            seen={seen}
+            media={media}
+            last={last}
+            single={single}
+            clusterFirstMessage={clusterFirstMessage}
+            clusterLastMessage={clusterLastMessage}
+            showTimestamp={showTimestamp}
+            themeColor={themeColor}
+        />
+        :
+        <IncomingMessage
+            showAvatar={showAvatar}
+            text={text}
+            created_at={created_at}
+            media={media}
+            user={user}
+            showHeader={showHeader}
+            last={last}
+            single={single}
+            showTimestamp={showTimestamp}
+            themeColor={themeColor}
+        />
+
     return (
-        type === "outgoing" ?
-            <OutgoingMessage
-                loading={loading}
-                text={text}
-                created_at={created_at}
-                seen={seen}
-                media={media}
-                last={last}
-                single={single}
-                clusterFirstMessage={clusterFirstMessage}
-                clusterLastMessage={clusterLastMessage}
-                showTimestamp={showTimestamp}
-                themeColor={themeColor}
-            />
-
-            :
-
-            <IncomingMessage
-                showAvatar={showAvatar}
-                text={text}
-                created_at={created_at}
-                media={media}
-                user={user}
-                showHeader={showHeader}
-                last={last}
-                single={single}
-                showTimestamp={showTimestamp}
-                themeColor={themeColor}
-            />
-
+        <MessageWithContextMenu contextMenuActions={contextMenuActions}>
+            {messageComponent}
+        </MessageWithContextMenu>
     )
 }
 

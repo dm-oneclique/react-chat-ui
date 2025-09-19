@@ -3,7 +3,7 @@ import Message from '../message'
 import styled from 'styled-components'
 import Loading from '../loading'
 import useDetectScrollPosition from '../../hooks/useDetectScrollPosition'
-import type { MessageType } from '../../types/MessageType'
+import type { MessageType, ActionDescription } from '../../types/MessageType'
 import TypingIndicator from '../typing-indicator'
 import MessageListBackground from '../message-list-background'
 import useColorSet from '../../hooks/useColorSet'
@@ -26,6 +26,11 @@ export type MessageListProps = {
      * If not provided, falls back to themeColor prop.
      */
     getMessageThemeColor?: (message: MessageType) => string | undefined
+    /**
+     * Optional context menu actions for messages.
+     * Actions can be filtered by message type using the onlyFor property.
+     */
+    contextMenuActions?: ActionDescription[]
 }
 
 
@@ -108,6 +113,7 @@ export default function MessageList({
     customLoaderComponent,
     customEmptyMessagesComponent,
     getMessageThemeColor,
+    contextMenuActions,
 }: MessageListProps) {
 
     const [messages, setMessages] = useState<(MessageType & { showTimestamp?: boolean })[]>([])
@@ -194,6 +200,18 @@ export default function MessageList({
 
 
     const noMessageTextColor = useColorSet("--no-message-text-color")
+
+    // Helper function to filter context menu actions by message type
+    const getFilteredActions = (messageType: 'incoming' | 'outgoing'): ActionDescription[] => {
+        if (!contextMenuActions) return []
+        
+        return contextMenuActions.filter(action => {
+            // If onlyFor is undefined, action applies to both types
+            if (!action.onlyFor) return true
+            // Otherwise, only include if onlyFor matches the message type
+            return action.onlyFor === messageType
+        })
+    }
 
     const scrollToBottom = async () => {
         if (bottomBufferRef.current && scrollContainerRef.current) {
@@ -297,6 +315,7 @@ export default function MessageList({
                                         clusterFirstMessage={firstClusterMessage}
                                         clusterLastMessage={lastClusterMessage}
                                         themeColor={messageThemeColor}
+                                        contextMenuActions={getFilteredActions('outgoing')}
                                     />
 
                                 } else {
@@ -316,6 +335,7 @@ export default function MessageList({
                                         text={text}
                                         showTimestamp={showTimestamp}
                                         themeColor={messageThemeColor}
+                                        contextMenuActions={getFilteredActions('incoming')}
                                     />
                                 }
                             })}

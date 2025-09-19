@@ -7,6 +7,12 @@ export interface MediaType {
   name?: string
 }
 
+export interface ActionDescription {
+  name: string
+  handler: () => void
+  onlyFor?: 'incoming' | 'outgoing'
+}
+
 export  interface MessageType  {
   user: UserType
   id?: string

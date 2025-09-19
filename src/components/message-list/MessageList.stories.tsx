@@ -83,6 +83,51 @@ export const CustomUserColors: Story = {
   ),
 };
 
+export const WithContextMenu: Story = {
+  render: args => (
+    <div style={{ height: "100vh" }}>
+      <MessageList
+        {...args}
+        currentUserId="danny_1"
+        messages={messages}
+        themeColor="#6ea9d7"
+        contextMenuActions={[
+          {
+            name: "Copy Message",
+            handler: () => {
+              alert("Message copied to clipboard!");
+            }
+          },
+          {
+            name: "Reply to Message",
+            handler: () => alert("Reply functionality")
+          },
+          {
+            name: "Edit Message",
+            handler: () => alert("Edit message functionality"),
+            onlyFor: "outgoing"
+          },
+          {
+            name: "Delete Message",
+            handler: () => alert("Delete message functionality"),
+            onlyFor: "outgoing"
+          },
+          {
+            name: "React to Message",
+            handler: () => alert("React functionality"),
+            onlyFor: "incoming"
+          },
+          {
+            name: "Report Message",
+            handler: () => alert("Report functionality"),
+            onlyFor: "incoming"
+          }
+        ]}
+      />
+    </div>
+  ),
+};
+
 
 
 

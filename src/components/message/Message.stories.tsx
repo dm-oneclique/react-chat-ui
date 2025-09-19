@@ -352,6 +352,74 @@ const OutgoingGifContentTemplate: StoryFn<Props> = (args: Props) => <Message
   }}
 />
 
+// Context Menu Examples
+const ContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
+  {...args}
+  type="outgoing"
+  text="Right-click on this message to see the context menu!"
+  created_at={date}
+  contextMenuActions={[
+    {
+      name: "Copy Message",
+      handler: () => {
+        navigator.clipboard.writeText("Right-click on this message to see the context menu!");
+        alert("Message copied to clipboard!");
+      }
+    },
+    {
+      name: "Edit Message",
+      handler: () => alert("Edit message functionality"),
+      onlyFor: "outgoing"
+    },
+    {
+      name: "Delete Message",
+      handler: () => alert("Delete message functionality"),
+      onlyFor: "outgoing"
+    },
+    {
+      name: "Reply to Message",
+      handler: () => alert("Reply functionality")
+    }
+  ]}
+/>
+
+const IncomingContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
+  {...args}
+  user={{
+    "id": "danny_1",
+    "name": "Daniel Georgetown",
+    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
+  }}
+  type="incoming"
+  text="Right-click on this incoming message to see the context menu!"
+  created_at={date}
+  showAvatar={true}
+  showHeader={true}
+  contextMenuActions={[
+    {
+      name: "Copy Message",
+      handler: () => {
+        navigator.clipboard.writeText("Right-click on this incoming message to see the context menu!");
+        alert("Message copied to clipboard!");
+      }
+    },
+    {
+      name: "Reply to Message",
+      handler: () => alert("Reply functionality")
+    },
+    {
+      name: "React to Message",
+      handler: () => alert("React functionality"),
+      onlyFor: "incoming"
+    },
+    {
+      name: "Report Message",
+      handler: () => alert("Report functionality"),
+      onlyFor: "incoming"
+    }
+  ]}
+/>
+
 
 // By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
 // https://storybook.js.org/docs/react/workflows/unit-testing
@@ -381,6 +449,9 @@ export const OutgoingImageContent = OutgoingImageContentTemplate.bind({});
 export const OutgoingFileContent = OutgoingFileContentTemplate.bind({});
 export const OutgoingVideoContent = OutgoingVideoContentTemplate.bind({});
 export const OutgoingGifContent = OutgoingGifContentTemplate.bind({});
+
+export const WithContextMenu = ContextMenuTemplate.bind({});
+export const IncomingWithContextMenu = IncomingContextMenuTemplate.bind({});
 
 
 
