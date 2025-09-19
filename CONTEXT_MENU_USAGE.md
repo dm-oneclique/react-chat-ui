@@ -88,5 +88,7 @@ interface ActionDescription {
 - Message type filtering
 - Proper positioning at cursor location
 - Click outside or Escape key to close
+- Visual feedback: subtle dark overlay on message when context menu is open
+- Smooth transitions for better UX
 - TypeScript support
 - Works with both Message and MessageList components

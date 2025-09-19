@@ -358,27 +358,43 @@ const ContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
   type="outgoing"
   text="Right-click on this message to see the context menu!"
   created_at={date}
+  id="outgoing-msg-001"
   contextMenuActions={[
     {
       name: "Copy Message",
-      handler: () => {
-        navigator.clipboard.writeText("Right-click on this message to see the context menu!");
-        alert("Message copied to clipboard!");
+      handler: (message) => {
+        navigator.clipboard.writeText(message.text || "");
+        alert(`Message copied to clipboard! Message ID: ${message.id}`);
       }
     },
     {
       name: "Edit Message",
-      handler: () => alert("Edit message functionality"),
+      handler: (message) => alert(`Edit message functionality for message: "${message.text}" (ID: ${message.id})`),
       onlyFor: "outgoing"
     },
     {
       name: "Delete Message",
-      handler: () => alert("Delete message functionality"),
+      handler: (message) => alert(`Delete message functionality for message ID: ${message.id}`),
       onlyFor: "outgoing"
     },
     {
       name: "Reply to Message",
-      handler: () => alert("Reply functionality")
+      handler: (message) => alert(`Reply functionality - replying to: "${message.text}" from ${message.user.name}`)
+    },
+    {
+      name: "Show Message Details",
+      handler: (message) => {
+        const details = {
+          id: message.id,
+          text: message.text,
+          user: message.user.name,
+          createdAt: message.createdAt?.toISOString(),
+          seen: message.seen,
+          loading: message.loading,
+          hasMedia: !!message.media
+        };
+        alert(`Message Details:\n${JSON.stringify(details, null, 2)}`);
+      }
     }
   ]}
 />
@@ -395,27 +411,96 @@ const IncomingContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
   created_at={date}
   showAvatar={true}
   showHeader={true}
+  id="incoming-msg-001"
   contextMenuActions={[
     {
       name: "Copy Message",
-      handler: () => {
-        navigator.clipboard.writeText("Right-click on this incoming message to see the context menu!");
-        alert("Message copied to clipboard!");
+      handler: (message) => {
+        navigator.clipboard.writeText(message.text || "");
+        alert(`Message copied to clipboard! From: ${message.user.name} (ID: ${message.id})`);
       }
     },
     {
       name: "Reply to Message",
-      handler: () => alert("Reply functionality")
+      handler: (message) => alert(`Reply functionality - replying to: "${message.text}" from ${message.user.name}`)
     },
     {
       name: "React to Message",
-      handler: () => alert("React functionality"),
+      handler: (message) => alert(`React functionality for message from ${message.user.name}: "${message.text}"`),
       onlyFor: "incoming"
     },
     {
       name: "Report Message",
-      handler: () => alert("Report functionality"),
+      handler: (message) => alert(`Report functionality - reporting message ID: ${message.id} from ${message.user.name}`),
       onlyFor: "incoming"
+    },
+    {
+      name: "View User Profile",
+      handler: (message) => alert(`View profile of ${message.user.name} (ID: ${message.user.id})`),
+      onlyFor: "incoming"
+    }
+  ]}
+/>
+
+const MediaContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
+  {...args}
+  user={{
+    "id": "alice_1",
+    "name": "Alice Johnson",
+    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
+  }}
+  type="incoming"
+  text="Check out this awesome image!"
+  created_at={date}
+  showAvatar={true}
+  showHeader={true}
+  id="media-msg-001"
+  media={{
+    type: "image",
+    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
+    name: "profile-picture.jpeg"
+  }}
+  contextMenuActions={[
+    {
+      name: "Download Media",
+      handler: (message) => {
+        if (message.media) {
+          alert(`Downloading ${message.media.type}: ${message.media.name || 'unnamed'} from ${message.media.url}`);
+        } else {
+          alert("No media to download");
+        }
+      }
+    },
+    {
+      name: "View Full Size",
+      handler: (message) => {
+        if (message.media) {
+          alert(`Opening full size view for ${message.media.type}: ${message.media.url}`);
+        } else {
+          alert("No media to view");
+        }
+      }
+    },
+    {
+      name: "Copy Media Link",
+      handler: (message) => {
+        if (message.media) {
+          navigator.clipboard.writeText(message.media.url);
+          alert(`Media link copied! Type: ${message.media.type}, URL: ${message.media.url}`);
+        } else {
+          alert("No media link to copy");
+        }
+      }
+    },
+    {
+      name: "Share Media",
+      handler: (message) => {
+        if (message.media) {
+          alert(`Sharing ${message.media.type} from ${message.user.name}: ${message.media.url}`);
+        } else {
+          alert("No media to share");
+        }
+      }
     }
   ]}
 />
@@ -452,6 +537,7 @@ export const OutgoingGifContent = OutgoingGifContentTemplate.bind({});
 
 export const WithContextMenu = ContextMenuTemplate.bind({});
 export const IncomingWithContextMenu = IncomingContextMenuTemplate.bind({});
+export const MediaWithContextMenu = MediaContextMenuTemplate.bind({});
 
 
 

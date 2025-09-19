@@ -9,7 +9,7 @@ export interface MediaType {
 
 export interface ActionDescription {
   name: string
-  handler: () => void
+  handler: (message: MessageType) => void
   onlyFor?: 'incoming' | 'outgoing'
 }
 

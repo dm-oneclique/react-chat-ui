@@ -3,7 +3,7 @@ import type { UserType } from '../../types/UserType';
 import OutgoingMessage from './outgoing-message'
 import IncomingMessage from './incoming-message'
 import MessageWithContextMenu from './message-with-context-menu'
-import { type MediaType, type ActionDescription } from '../../types/MessageType';
+import { type MediaType, type ActionDescription, type MessageType } from '../../types/MessageType';
 
 
 export type Props = {
@@ -25,6 +25,7 @@ export type Props = {
     clusterLastMessage?: boolean
     themeColor?: string
     contextMenuActions?: ActionDescription[]
+    id?: string
 };
 
 
@@ -44,8 +45,20 @@ export default function Message({
     clusterLastMessage,
     showTimestamp,
     themeColor,
-    contextMenuActions
+    contextMenuActions,
+    id
 }: Props) {
+
+    // Construct MessageType object for action handlers
+    const messageData: MessageType = {
+        user: user || { id: "unknown", name: "Unknown User" },
+        id: id || `msg_${Date.now()}`, // Use provided ID or generate one for demo purposes
+        text,
+        media,
+        createdAt: created_at,
+        seen,
+        loading
+    }
 
     const messageComponent = type === "outgoing" ?
         <OutgoingMessage
@@ -76,7 +89,10 @@ export default function Message({
         />
 
     return (
-        <MessageWithContextMenu contextMenuActions={contextMenuActions}>
+        <MessageWithContextMenu 
+            contextMenuActions={contextMenuActions}
+            messageData={messageData}
+        >
             {messageComponent}
         </MessageWithContextMenu>
     )

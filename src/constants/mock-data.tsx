@@ -185,6 +185,7 @@ export const fewChats = [
 
 export const messages: MessageType[] = [
   {
+    id: 'msg-001',
     user: {
       id: 'mark',
       name: 'Daniel Georgetown',
@@ -203,6 +204,7 @@ export const messages: MessageType[] = [
     text: 'hello',
   },
   {
+    id: 'msg-003',
     user: {
       id: 'danny_1',
       name: 'Daniel Georgetown',
@@ -227,6 +229,7 @@ export const messages: MessageType[] = [
     text: 'sdfsdf',
   },
   {
+    id: 'msg-006',
     user: {
       id: 'danny_1',
       name: 'Daniel Georgetown',
@@ -399,6 +402,7 @@ export const messages: MessageType[] = [
     loading: true
   },
   {
+    id: 'msg-final',
     user: {
       id: 'danny_1',
       name: 'Daniel Georgetown',

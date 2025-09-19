@@ -274,7 +274,7 @@ export default function MessageList({
                                     </NoMessagesTextContainer>)
                             }
                             {messages && scrollContainerRef.current && bottomBufferRef.current && messages.map((message, index) => {
-                                const { user, text, media, loading: messageLoading, seen, createdAt, showTimestamp } = message
+                                const { user, text, media, loading: messageLoading, seen, createdAt, showTimestamp, id } = message
                                 //determining the type of message to render
                                 let lastClusterMessage, firstClusterMessage, last, single
 
@@ -316,6 +316,7 @@ export default function MessageList({
                                         clusterLastMessage={lastClusterMessage}
                                         themeColor={messageThemeColor}
                                         contextMenuActions={getFilteredActions('outgoing')}
+                                        id={id}
                                     />
 
                                 } else {
@@ -336,6 +337,7 @@ export default function MessageList({
                                         showTimestamp={showTimestamp}
                                         themeColor={messageThemeColor}
                                         contextMenuActions={getFilteredActions('incoming')}
+                                        id={id}
                                     />
                                 }
                             })}

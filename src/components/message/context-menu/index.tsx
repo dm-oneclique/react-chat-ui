@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { type ActionDescription } from '../../../types/MessageType'
+import { type ActionDescription, type MessageType } from '../../../types/MessageType'
 
 const ContextMenuContainer = styled.div<{ 
   visible: boolean
@@ -47,10 +47,11 @@ interface ContextMenuProps {
   x: number
   y: number
   actions: ActionDescription[]
+  messageData?: MessageType
   onClose: () => void
 }
 
-export default function ContextMenu({ visible, x, y, actions, onClose }: ContextMenuProps) {
+export default function ContextMenu({ visible, x, y, actions, messageData, onClose }: ContextMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -78,7 +79,9 @@ export default function ContextMenu({ visible, x, y, actions, onClose }: Context
   }, [visible, onClose])
 
   const handleActionClick = (action: ActionDescription) => {
-    action.handler()
+    if (messageData) {
+      action.handler(messageData)
+    }
     onClose()
   }
 
