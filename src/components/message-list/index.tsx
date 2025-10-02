@@ -26,11 +26,27 @@ export type MessageListProps = {
      * If not provided, falls back to themeColor prop.
      */
     getMessageThemeColor?: (message: MessageType) => string | undefined
+
     /**
      * Optional context menu actions for messages.
      * Actions can be filtered by message type using the onlyFor property.
      */
     contextMenuActions?: ActionDescription[]
+
+    /**
+     * Enable markdown rendering for message content
+     */
+    enableMarkdown?: boolean
+
+    /**
+     * Force scroll to bottom on new message
+     */
+    forceScrollToBottomOnNewMessage?: boolean
+
+    /**
+     * 
+     */
+    showIncomingMessageHeader?: boolean
 }
 
 
@@ -114,6 +130,9 @@ export default function MessageList({
     customEmptyMessagesComponent,
     getMessageThemeColor,
     contextMenuActions,
+    enableMarkdown = true,
+    forceScrollToBottomOnNewMessage = false,
+    showIncomingMessageHeader = true
 }: MessageListProps) {
 
     const [messages, setMessages] = useState<(MessageType & { showTimestamp?: boolean })[]>([])
@@ -121,10 +140,14 @@ export default function MessageList({
 
     /** keeps track of whether messages was previously empty or whether it has already scrolled */
     const [messagesWasEmpty, setMessagesWasEmpty] = useState(true)
+    /** tracks when messages array length increases to trigger effects only on length increase */
+    const [messagesLengthIncreased, setMessagesLengthIncreased] = useState(0)
     const containerRef = useRef<any>(undefined)
 
     const bottomBufferRef = useRef<any>(undefined)
     const scrollContainerRef = useRef<any>(undefined)
+    const previousMessagesLengthRef = useRef<number>(0)
+    const lastMessageRef = useRef<string | null>(null)
 
     const { detectBottom, detectTop } = useDetectScrollPosition(scrollContainerRef)
 
@@ -166,8 +189,26 @@ export default function MessageList({
         }
     }, [rawMessages]);
 
+    // Track when new messages are added to the end of the array
+    useEffect(() => {
+        const currentLength = messages?.length || 0;
+        const previousLength = previousMessagesLengthRef.current;
+        const currentLastMessage = messages?.[messages.length - 1];
+        const currentLastMessageId = currentLastMessage?.id || currentLastMessage?.text || null;
+
+        // Only trigger if:
+        // 1. Length increased AND
+        // 2. The last message is different from the previous last message (new message at end)
+        if (currentLength > previousLength && currentLastMessageId !== lastMessageRef.current) {
+            setMessagesLengthIncreased(prev => prev + 1);
+        }
+
+        previousMessagesLengthRef.current = currentLength;
+        lastMessageRef.current = currentLastMessageId;
+    }, [messages]);
 
     useEffect(() => {
+
         if (!messages) {
             setMessagesWasEmpty(true)
         }
@@ -182,17 +223,25 @@ export default function MessageList({
                 scrollToBottom()
             }
 
+            if (forceScrollToBottomOnNewMessage) {
+                scrollToBottom()
+            }
+
+            //if the most recent message is from the current user then scroll to bottom
+            if (messages?.length && messages[messages.length - 1]?.user?.id?.trim() === currentUserId?.trim()) {
+                scrollToBottom()
+            }
+
             // when closer to the bottom of the scroll bar and a new message arrives then scroll to bottom
             if (detectBottom()) {
                 scrollToBottom()
             }
 
         }
-    }, [messages])
+    }, [messagesLengthIncreased, messagesWasEmpty])
 
 
     useEffect(() => {
-        //TODO when closer to the bottom of the scroll bar and a new message arrives then scroll to bottom
         if (detectBottom()) {
             scrollToBottom()
         }
@@ -298,7 +347,7 @@ export default function MessageList({
                                 // Determine the theme color for this message
                                 const messageThemeColor = getMessageThemeColor?.(message)
 
-                                if (user.id == (currentUserId && currentUserId.toLowerCase())) {
+                                if (user.id?.trim() === currentUserId?.trim()) {
 
                                     // my message
                                     return <Message key={index}
@@ -317,6 +366,7 @@ export default function MessageList({
                                         themeColor={messageThemeColor}
                                         contextMenuActions={getFilteredActions('outgoing')}
                                         id={id}
+                                        enableMarkdown={enableMarkdown}
                                     />
 
                                 } else {
@@ -330,7 +380,7 @@ export default function MessageList({
                                         seen={seen}
                                         created_at={createdAt}
                                         showAvatar={lastClusterMessage}
-                                        showHeader={firstClusterMessage}
+                                        showHeader={firstClusterMessage && showIncomingMessageHeader}
                                         last={single ? false : last}
                                         single={single}
                                         text={text}
@@ -338,6 +388,7 @@ export default function MessageList({
                                         themeColor={messageThemeColor}
                                         contextMenuActions={getFilteredActions('incoming')}
                                         id={id}
+                                        enableMarkdown={enableMarkdown}
                                     />
                                 }
                             })}

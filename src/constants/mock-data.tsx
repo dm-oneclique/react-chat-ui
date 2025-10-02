@@ -139,6 +139,63 @@ export const chats: ConversationType[] = [
       },
     },
   },
+  {
+    id: '10',
+    title: 'Markdown Testers',
+    avatar: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+    unread: true,
+    lastMessage: {
+      seen: false,
+      createdAt: date,
+      text: 'Check out this **bold text** and *italic text* with `inline code`',
+      user: {
+        id: 'markdown_user',
+        name: 'Markdown User',
+        avatar: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+      },
+    },
+  },
+  {
+    id: '11',
+    title: 'Code Sharing',
+    avatar: 'https://cdn.pixabay.com/photo/2015/03/03/08/55/portrait-657116_1280.jpg',
+    lastMessage: {
+      seen: true,
+      createdAt: date,
+      text: 'Here is some code: ```javascript\nconst greeting = "Hello World!";\nconsole.log(greeting);\n```',
+      user: {
+        id: 'code_user',
+        name: 'Code Master',
+        avatar: 'https://cdn.pixabay.com/photo/2015/03/03/08/55/portrait-657116_1280.jpg',
+      },
+    },
+  },
+  {
+    id: '12',
+    title: 'Link Sharing',
+    lastMessage: {
+      seen: true,
+      createdAt: date,
+      text: 'Check out this [awesome link](https://github.com) and this URL: https://example.com',
+      user: {
+        id: 'link_user',
+        name: 'Link Sharer',
+      },
+    },
+  },
+  {
+    id: '13',
+    title: 'Mixed Formatting',
+    lastMessage: {
+      seen: false,
+      createdAt: date,
+      text: '**Bold** and *italic* with ~~strikethrough~~ and `code` plus [links](https://example.com)',
+      user: {
+        id: 'format_user',
+        name: 'Format Master',
+      },
+    },
+  },
 ];
 
 export const fewChats = [
@@ -187,21 +244,31 @@ export const messages: MessageType[] = [
   {
     id: 'msg-001',
     user: {
-      id: 'mark',
+      id: 'markdown_test',
+      name: 'Markdown Tester',
+      avatar:
+        'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+    },
+    createdAt: date,
+    text: '# Markdown Test\n\nThis is a **markdown** message with:\n\n- Bullet points\n- **Bold text**\n- *Italic text*\n- `Inline code`\n\n```javascript\n// Code block\ const greeting = "Hello World!";\nconsole.log(greeting);\n```\n\n> This is a blockquote\n\nCheck out this [link](https://example.com) and this URL: https://github.com',
+  },
+  {
+    user: {
+      id: 'mArk',
       name: 'Daniel Georgetown',
       avatar:
         'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
     },
     createdAt: date,
-    text: 'first message',
+    text: 'first message updated',
   },
   {
     user: {
-      id: 'mark',
+      id: 'mArk',
       name: 'Markus',
     },
     createdAt: date,
-    text: 'hello',
+    text: 'hello updated',
   },
   {
     id: 'msg-003',
@@ -389,7 +456,7 @@ export const messages: MessageType[] = [
     },
     seen: false,
     createdAt: date,
-    text: 'only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today,'
+    text: 'only message [https://minchat.io](https://minchat.io) you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today, only message you will send today,'
   },
   {
     user: {

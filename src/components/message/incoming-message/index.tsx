@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Container as MyMessageContainer, Wrapper as MyMessageWrapper, Background } from '../outgoing-message'
 import placeholderProfilePNG from '../../../assets/profile.svg'
 import MediaContent from '../media-content'
@@ -17,15 +17,27 @@ const MessageContainer = styled(MyMessageContainer)`
     margin-bottom: 0px;
 `
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled(MyMessageWrapper)`
 justify-content: start;
 align-items: flex-end;
+animation: ${fadeIn} 0.2s ease-in-out;
 `
 
 const DPContainer = styled.div`
     width: 32px;
     height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
     margin-left: 10px;
     box-sizing: border-box;
     user-select: none;
@@ -34,6 +46,9 @@ const DPContainer = styled.div`
 const DisplayPicture = styled.img`
     width: 32px;
     height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    flex-shrink: 0;
     border-radius: 9999px;
     box-sizing: border-box;
     border-width: 2px;
@@ -91,7 +106,8 @@ export default function IncomingMessage({
     single,
     created_at,
     showTimestamp,
-    themeColor
+    themeColor,
+    enableMarkdown
 }: Omit<Props, "type" | "clusterFirstMessage" | "clusterLastMessage" | "seen">) {
 
     const { themeColor: contextThemeColor } = useContext(MinChatUIContext)
@@ -115,7 +131,7 @@ export default function IncomingMessage({
     return (
         <Wrapper
             data-testid="incoming-message"
-            className='fade-animation'
+            className=''
         >
             <DPContainer>
                 {showAvatar &&
@@ -129,11 +145,11 @@ export default function IncomingMessage({
             </DPContainer>
 
             <TextWrapper>
-                {showHeader &&
-                    <HeaderContainer>
+                <HeaderContainer>
+                    {showHeader &&
                         <Name color={nameTextColor}>{user?.name}</Name>
-                    </HeaderContainer>
-                }
+                    }
+                </HeaderContainer>
 
                 <div style={{ display: "flex" }}>
                     <MessageContainer>
@@ -144,7 +160,7 @@ export default function IncomingMessage({
                                 single
                             }))()}
                             backgroundColor={backgroundColor}
-                            bgColor={(themeColor || backgroundColor  || contextThemeColor) ?? ''} />
+                            bgColor={(themeColor || backgroundColor || contextThemeColor) ?? ''} />
 
                         {media ? <MediaContent
                             last={last}
@@ -154,7 +170,8 @@ export default function IncomingMessage({
                             :
                             <TextContent
                                 linkColor={linkColor}
-                                color={textColor}>{text}</TextContent>}
+                                color={textColor}
+                                enableMarkdown={enableMarkdown}>{text}</TextContent>}
 
                         {showTimestamp && <div style={{ marginTop: '4px', paddingBottom: '4px' }}>
                             <Timestamp
@@ -163,7 +180,7 @@ export default function IncomingMessage({
                             />
                         </div>
                         }
-                        
+
                     </MessageContainer>
                 </div>
 

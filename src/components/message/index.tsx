@@ -26,6 +26,7 @@ export type Props = {
     themeColor?: string
     contextMenuActions?: ActionDescription[]
     id?: string
+    enableMarkdown?: boolean
 };
 
 
@@ -46,7 +47,8 @@ export default function Message({
     showTimestamp,
     themeColor,
     contextMenuActions,
-    id
+    id,
+    enableMarkdown = true
 }: Props) {
 
     // Construct MessageType object for action handlers
@@ -73,6 +75,7 @@ export default function Message({
             clusterLastMessage={clusterLastMessage}
             showTimestamp={showTimestamp}
             themeColor={themeColor}
+            enableMarkdown={enableMarkdown}
         />
         :
         <IncomingMessage
@@ -86,6 +89,7 @@ export default function Message({
             single={single}
             showTimestamp={showTimestamp}
             themeColor={themeColor}
+            enableMarkdown={enableMarkdown}
         />
 
     return (

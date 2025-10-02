@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof MessageList>;
 
 export const Default: Story = {
-  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="mark" messages={messages} /></div>,
+  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="mArk" messages={messages} /></div>,
 };
 
 export const WithPadding: Story = {
@@ -35,7 +35,7 @@ export const WithPadding: Story = {
 };
 
 export const FewMessages: Story = {
-  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="danny_1" themeColor="#6ea9d7" messages={fewMessages} /></div>,
+  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="danny_1" themeColor="#6ea9d7" messages={fewMessages} showIncomingMessageHeader={false} /></div>,
 };
 
 export const NoMessages: Story = {
@@ -50,8 +50,12 @@ export const MessagesLoading: Story = {
   render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="danny_1" loading={true} messages={messages} themeColor="#6ea9d7" /></div>,
 };
 
+export const WithMarkdown: Story = {
+  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="mArk" messages={messages} themeColor="#6ea9d7" enableMarkdown={true} /></div>,
+};
+
 export const CustomMessagesLoading: Story = {
-  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="danny_1" loading={true} messages={messages} themeColor="#6ea9d7" customLoaderComponent={<div style={{backgroundColor: "red"}}>Custom Loading...</div>} /></div>,
+  render: args => <div style={{ height: "100vh" }}><MessageList {...args} currentUserId="danny_1" loading={true} messages={messages} themeColor="#6ea9d7" customLoaderComponent={<div style={{ backgroundColor: "red" }}>Custom Loading...</div>} /></div>,
 };
 
 export const SendMessageLoading: Story = {
