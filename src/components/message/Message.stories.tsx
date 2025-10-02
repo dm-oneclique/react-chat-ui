@@ -92,7 +92,7 @@ const IncomingWithMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
   **Hello World!**
   
   visit:
-  - https://google.com to begin searching
+  - www.google.com to begin searching
   - something else:
     1. something else 2
     2. something else 3
