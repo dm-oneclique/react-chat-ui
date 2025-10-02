@@ -89,7 +89,7 @@ export default function OutgoingMessage({
 }: Omit<Props, "showHeader" | "showAvatar" | "type">) {
 
     const { themeColor: contextThemeColor } = useContext(MinChatUIContext)
-
+    const mediaArray = media ? Array.isArray(media) ? media : [media] : []
     const textColor = useColorSet("--outgoing-message-text-color") || '#ffffff'
     const backgroundColor = useColorSet("--outgoing-message-background-color")
     const timestampColor = useColorSet("--outgoing-message-timestamp-color") || '#f3f4f6'
@@ -117,12 +117,15 @@ export default function OutgoingMessage({
                         }))()}
                         bgColor={themeColor || backgroundColor  || contextThemeColor} />
 
-                    {media ? <MediaContent
+                    {mediaArray.map((mediaItem) => (
+                        <MediaContent
                         last={last}
                         single={single}
                         messageType='outgoing'
-                        {...media} />
-                        :
+                        {...mediaItem} />
+                    ))}
+
+                    {text &&
                         <TextContent
                             linkColor={linkColor}
                             color={textColor}

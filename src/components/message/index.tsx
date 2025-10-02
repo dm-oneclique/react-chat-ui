@@ -11,7 +11,7 @@ export type Props = {
     created_at?: Date
     seen?: boolean
     text?: string,
-    media?: MediaType,
+    media?: MediaType | MediaType[],
     loading?: boolean
     type?: "incoming" | "outgoing"
     user?: UserType
@@ -93,7 +93,7 @@ export default function Message({
         />
 
     return (
-        <MessageWithContextMenu 
+        <MessageWithContextMenu
             contextMenuActions={contextMenuActions}
             messageData={messageData}
         >

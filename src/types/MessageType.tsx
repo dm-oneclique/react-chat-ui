@@ -13,11 +13,11 @@ export interface ActionDescription {
   onlyFor?: 'incoming' | 'outgoing'
 }
 
-export  interface MessageType  {
+export interface MessageType  {
   user: UserType
   id?: string
   text?: string
-  media?: MediaType
+  media?: MediaType | MediaType[]
   createdAt?: Date
   seen?: boolean
   loading?: boolean

@@ -88,7 +88,7 @@ const IncomingMessageBackground = styled(Background) <{
 `
 
 const HeaderContainer = styled.div`
- display: flex; 
+ display: flex;
  align-items: "center";
  margin-top: 16px;
  margin-bottom: 6px;
@@ -120,7 +120,7 @@ export default function IncomingMessage({
         }
     }, [user])
 
-
+    const mediaArray = media ? Array.isArray(media) ? media : [media] : []
     const textColor = useColorSet("--incoming-message-text-color")
     const nameTextColor = useColorSet("--incoming-message-name-text-color")
     const linkColor = useColorSet("--incoming-message-link-color")
@@ -162,16 +162,20 @@ export default function IncomingMessage({
                             backgroundColor={backgroundColor}
                             bgColor={(themeColor || backgroundColor || contextThemeColor) ?? ''} />
 
-                        {media ? <MediaContent
-                            last={last}
-                            single={single}
-                            messageType='incoming'
-                            {...media} />
-                            :
+                        {mediaArray.map((mediaItem) => (
+                            <MediaContent
+                                last={last}
+                                single={single}
+                                messageType='incoming'
+                                {...mediaItem} />
+                        ))}
+
+                        {text &&
                             <TextContent
                                 linkColor={linkColor}
                                 color={textColor}
-                                enableMarkdown={enableMarkdown}>{text}</TextContent>}
+                                enableMarkdown={enableMarkdown}>{text}</TextContent>
+                        }
 
                         {showTimestamp && <div style={{ marginTop: '4px', paddingBottom: '4px' }}>
                             <Timestamp

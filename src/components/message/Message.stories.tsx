@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { useEffect, useRef, useState } from 'react';
 import Message from ".";
 import type { Props } from ".";
+import type { MediaType } from '../../types/MessageType';
 import { StyleSheetManager } from 'styled-components';
 
 const meta: Meta = {
@@ -20,12 +21,53 @@ const hoursAgoDate = new Date(date)
 const daysAgoDate = new Date(date)
 const monthsAgoDate = new Date(date)
 
-
-
 minutesAgoDate.setMinutes(minutesAgoDate.getMinutes() - 10)
 hoursAgoDate.setHours(hoursAgoDate.getHours() - 3)
 daysAgoDate.setDate(daysAgoDate.getDate() - 10)
 monthsAgoDate.setMonth(monthsAgoDate.getMonth() - 2)
+
+// User data
+const dannyUser = {
+  id: "danny_1",
+  name: "Daniel Georgetown",
+  avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
+};
+
+const aliceUser = {
+  id: "alice_1",
+  name: "Alice Johnson",
+  avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
+};
+
+// Media data
+const imageMedia: MediaType = {
+  type: "image",
+  url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
+};
+
+const fileMedia: MediaType = {
+  type: "file",
+  url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
+  size: "2 mb"
+};
+
+const videoMedia: MediaType = {
+  type: "video",
+  url: "https://www.youtube.com/watch?v=dfhbmlm4emI",
+  size: "2 mb"
+};
+
+const gifMedia: MediaType = {
+  type: "gif",
+  url: "https://media2.giphy.com/media/sugyoDHOvvFVawa7qZ/giphy.gif?cid=ecf05e47c6mrta3sn8ol5nv1hgz6eu8jew3b2v0iya4ckbmv&ep=v1_gifs_gifId&rid=giphy.gif&ct=s",
+  size: "2 mb"
+};
+
+const mediaWithName: MediaType = {
+  type: "image",
+  url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
+  name: "profile-picture.jpeg"
+};
 
 const LeftTemplate: StoryFn<Props> = (args: Props) => {
   const styleTargetRef = useRef<HTMLDivElement | null>(null);
@@ -34,13 +76,10 @@ const LeftTemplate: StoryFn<Props> = (args: Props) => {
   console.log({ target })
 
   useEffect(() => {
-
     const t = document.getElementById("sc-style-target")
-
     if (t) {
       setTarget(t)
     }
-
   }, [styleTargetRef.current])
 
   return <>
@@ -50,11 +89,7 @@ const LeftTemplate: StoryFn<Props> = (args: Props) => {
         <div>
           <Message
             {...args}
-            user={{
-              "id": "danny_1",
-              "name": "Daniel Georgetown",
-              avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-            }}
+            user={dannyUser}
             type="incoming"
             text="Hello World! incoming"
             created_at={date}
@@ -65,32 +100,21 @@ const LeftTemplate: StoryFn<Props> = (args: Props) => {
   </>
 }
 
-
-
 const IncomingWithLinkTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   text="Hello World! visit https://google.com to begin searching"
   created_at={minutesAgoDate}
-
 />
 
 const IncomingWithMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   text="
   **Hello World!**
-  
+
   visit:
   - www.google.com to begin searching
   - something else:
@@ -103,74 +127,46 @@ const IncomingWithMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
     7. something else 8
   "
   created_at={minutesAgoDate}
-
 />
 
 const IncomingWithLinkAndMarkdownTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   text="**Hello World!**
-  
+
   visit https://google.com to begin searching"
   created_at={minutesAgoDate}
-
 />
 
 const OutgoingWithLinkTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="outgoing"
   text="Hello World! visit https://google.com to begin searching"
   created_at={hoursAgoDate}
-
 />
-
-
 
 const RightTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="outgoing"
   text="Hello World!"
   created_at={daysAgoDate}
-
 />
-
 
 const LoadingTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   loading={true}
   type="outgoing"
   text="Hello World!"
   created_at={monthsAgoDate}
-
 />
 
 const WithAvatarTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   showAvatar={true}
   created_at={date}
@@ -179,79 +175,43 @@ const WithAvatarTemplate: StoryFn<Props> = (args: Props) => <Message
 
 const ImageContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   showAvatar={true}
   created_at={minutesAgoDate}
-  media={{
-    type: "image",
-    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  media={imageMedia}
 />
 
 const FileContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   showAvatar={true}
   created_at={hoursAgoDate}
-
-  media={{
-    type: "file",
-    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
-    size: "2 mb"
-
-  }} />
+  media={fileMedia}
+/>
 
 const VideoContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   created_at={daysAgoDate}
-
   type="incoming"
   showAvatar={true}
-  media={{
-    type: "video",
-    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
-    size: "2 mb"
-  }} />
+  media={videoMedia}
+/>
 
 const GifContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   created_at={monthsAgoDate}
-
   type="incoming"
   showAvatar={true}
-  media={{
-    type: "gif",
-    url: "https://media2.giphy.com/media/sugyoDHOvvFVawa7qZ/giphy.gif?cid=ecf05e47c6mrta3sn8ol5nv1hgz6eu8jew3b2v0iya4ckbmv&ep=v1_gifs_gifId&rid=giphy.gif&ct=s",
-    size: "2 mb"
-  }} />
+  media={gifMedia}
+/>
 
 const WithHeaderTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   created_at={date}
   showAvatar={true}
@@ -261,11 +221,7 @@ const WithHeaderTemplate: StoryFn<Props> = (args: Props) => <Message
 
 const LastIncomingTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   created_at={minutesAgoDate}
   showAvatar={true}
@@ -273,14 +229,9 @@ const LastIncomingTemplate: StoryFn<Props> = (args: Props) => <Message
   text="Hello World!"
 />
 
-
 const SingleIncomingTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   showAvatar={true}
   single={true}
@@ -288,15 +239,9 @@ const SingleIncomingTemplate: StoryFn<Props> = (args: Props) => <Message
   text="Hello World!"
 />
 
-
-
 const SingleOutgoingTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="outgoing"
   single
   created_at={daysAgoDate}
@@ -305,11 +250,7 @@ const SingleOutgoingTemplate: StoryFn<Props> = (args: Props) => <Message
 
 const LastOutgoingTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="outgoing"
   last
   created_at={monthsAgoDate}
@@ -318,68 +259,58 @@ const LastOutgoingTemplate: StoryFn<Props> = (args: Props) => <Message
 
 const OutgoingImageContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="outgoing"
   created_at={date}
   showAvatar={true}
-  media={{
-    type: "image",
-    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }} />
+  media={imageMedia}
+/>
 
 const OutgoingFileContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="outgoing"
   created_at={minutesAgoDate}
   showAvatar={true}
-  media={{
-    type: "file",
-    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
-    size: "2 mb"
-  }} />
+  media={fileMedia}
+/>
 
 const OutgoingVideoContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   created_at={date}
   type="outgoing"
   showAvatar={true}
-  media={{
-    type: "video",
-    url: "https://www.youtube.com/watch?v=dfhbmlm4emI",
-    size: "2 mb"
-  }}
+  media={videoMedia}
 />
-
 
 const OutgoingGifContentTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   created_at={daysAgoDate}
   type="outgoing"
   showAvatar={true}
-  media={{
-    type: "gif",
-    url: "https://media2.giphy.com/media/sugyoDHOvvFVawa7qZ/giphy.gif?cid=ecf05e47c6mrta3sn8ol5nv1hgz6eu8jew3b2v0iya4ckbmv&ep=v1_gifs_gifId&rid=giphy.gif&ct=s",
-    size: "2 mb"
-  }}
+  media={gifMedia}
+/>
+
+const IncomingMultiMediaTemplate: StoryFn<Props> = (args: Props) => <Message
+  {...args}
+  user={dannyUser}
+  type="incoming"
+  created_at={date}
+  showAvatar={true}
+  media={[imageMedia, fileMedia, videoMedia, gifMedia]}
+  text="Here are some media files"
+/>
+
+const OutgoingMultiMediaTemplate: StoryFn<Props> = (args: Props) => <Message
+  {...args}
+  user={dannyUser}
+  type="outgoing"
+  created_at={date}
+  showAvatar={true}
+  media={[imageMedia, fileMedia, videoMedia, gifMedia]}
+  text="Here are some media files"
 />
 
 // Context Menu Examples
@@ -431,11 +362,7 @@ const ContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
 
 const IncomingContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "danny_1",
-    "name": "Daniel Georgetown",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={dannyUser}
   type="incoming"
   text="Right-click on this incoming message to see the context menu!"
   created_at={date}
@@ -474,28 +401,24 @@ const IncomingContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
 
 const MediaContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
   {...args}
-  user={{
-    "id": "alice_1",
-    "name": "Alice Johnson",
-    avatar: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  }}
+  user={aliceUser}
   type="incoming"
   text="Check out this awesome image!"
   created_at={date}
   showAvatar={true}
   showHeader={true}
   id="media-msg-001"
-  media={{
-    type: "image",
-    url: "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
-    name: "profile-picture.jpeg"
-  }}
+  media={mediaWithName}
   contextMenuActions={[
     {
       name: "Download Media",
       handler: (message) => {
         if (message.media) {
-          alert(`Downloading ${message.media.type}: ${message.media.name || 'unnamed'} from ${message.media.url}`);
+          const mediaArray = Array.isArray(message.media) ? message.media : [message.media]
+          const notification = mediaArray.map((mediaItem) => {
+            return `Downloading ${mediaItem.type}: ${mediaItem.name || 'unnamed'} from ${mediaItem.url}`
+          })
+          alert(notification.join("\n"));
         } else {
           alert("No media to download");
         }
@@ -505,7 +428,11 @@ const MediaContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
       name: "View Full Size",
       handler: (message) => {
         if (message.media) {
-          alert(`Opening full size view for ${message.media.type}: ${message.media.url}`);
+          const mediaArray = Array.isArray(message.media) ? message.media : [message.media]
+          const notification = mediaArray.map((mediaItem) => {
+            return `Opening full size view for ${mediaItem.type}: ${mediaItem.url}`
+          })
+          alert(notification.join("\n"));
         } else {
           alert("No media to view");
         }
@@ -515,8 +442,12 @@ const MediaContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
       name: "Copy Media Link",
       handler: (message) => {
         if (message.media) {
-          navigator.clipboard.writeText(message.media.url);
-          alert(`Media link copied! Type: ${message.media.type}, URL: ${message.media.url}`);
+          const mediaArray = Array.isArray(message.media) ? message.media : [message.media]
+          const notification = mediaArray.map((mediaItem) => {
+            return `Copying media link for ${mediaItem.type}: ${mediaItem.url}`
+          })
+          alert(notification.join("\n"));
+          navigator.clipboard.writeText(mediaArray.map((mediaItem) => mediaItem.url).join("\n"));
         } else {
           alert("No media link to copy");
         }
@@ -526,7 +457,11 @@ const MediaContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
       name: "Share Media",
       handler: (message) => {
         if (message.media) {
-          alert(`Sharing ${message.media.type} from ${message.user.name}: ${message.media.url}`);
+          const mediaArray = Array.isArray(message.media) ? message.media : [message.media]
+          const notification = mediaArray.map((mediaItem) => {
+            return `Sharing ${mediaItem.type} from ${message.user.name}: ${mediaItem.url}`
+          })
+          alert(notification.join("\n"));
         } else {
           alert("No media to share");
         }
@@ -534,7 +469,6 @@ const MediaContextMenuTemplate: StoryFn<Props> = (args: Props) => <Message
     }
   ]}
 />
-
 
 // By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
 // https://storybook.js.org/docs/react/workflows/unit-testing
@@ -553,8 +487,6 @@ export const IncomingFileContent = FileContentTemplate.bind({});
 export const IncomingVideoContent = VideoContentTemplate.bind({});
 export const IncomingGifContent = GifContentTemplate.bind({});
 
-
-
 export const Outgoing = RightTemplate.bind({});
 export const SingleOutgoing = SingleOutgoingTemplate.bind({});
 export const LastOutgoing = LastOutgoingTemplate.bind({});
@@ -564,15 +496,10 @@ export const OutgoingImageContent = OutgoingImageContentTemplate.bind({});
 export const OutgoingFileContent = OutgoingFileContentTemplate.bind({});
 export const OutgoingVideoContent = OutgoingVideoContentTemplate.bind({});
 export const OutgoingGifContent = OutgoingGifContentTemplate.bind({});
+export const IncomingMultiMedia = IncomingMultiMediaTemplate.bind({});
+export const OutgoingMultiMedia = OutgoingMultiMediaTemplate.bind({});
 
 export const WithContextMenu = ContextMenuTemplate.bind({});
 export const IncomingWithContextMenu = IncomingContextMenuTemplate.bind({});
 export const MediaWithContextMenu = MediaContextMenuTemplate.bind({});
-
-
-
-
-
-
-
 
