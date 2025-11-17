@@ -7,6 +7,11 @@ export interface MediaType {
   name?: string
 }
 
+export interface AttachedFileType extends Omit<MediaType, 'url'> {
+  url?: string
+  isLoading?: boolean
+}
+
 export interface ActionDescription {
   name: string
   handler: (message: MessageType) => void
