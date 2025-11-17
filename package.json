@@ -1,6 +1,6 @@
 {
   "name": "@minchat/react-chat-ui",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "author": "MinChat",
   "description": "Minchat SDK for React",
   "main": "dist/minchat-sdk.umd.js",
@@ -15,7 +15,8 @@
     "push-dev": "npm run build && npm publish --tag dev",
     "push": "npm run build && npm publish",
     "storybook": "STORYBOOK=true storybook dev -p 6006",
-    "build-storybook": "STORYBOOK=true storybook build"
+    "build-storybook": "STORYBOOK=true storybook build",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "marked": "^12.0.0"
